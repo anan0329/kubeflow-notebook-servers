@@ -6,12 +6,19 @@ USER root
 
 # args - software versions
  # renovate: datasource=github-tags depName=cdr/code-server versioning=semver
-ARG CODESERVER_VERSION=v4.3.0
+ARG CODESERVER_VERSION=v4.14.1
 
 # install - code-server
 RUN curl -sL "https://github.com/cdr/code-server/releases/download/${CODESERVER_VERSION}/code-server_${CODESERVER_VERSION/v/}_amd64.deb" -o /tmp/code-server.deb \
  && dpkg -i /tmp/code-server.deb \
  && rm -f /tmp/code-server.deb
+
+# install extensions
+ADD vscode-extensions-install.sh /tmp/vscode-extensions-install.sh
+ADD extensions.txt /tmp/extensions.txt
+RUN chmod 777 /tmp/vscode-extensions-install.sh
+RUN bash /tmp/vscode-extensions-install.sh
+RUN chown -R jovyan:root /home/jovyan/.local/share/code-server
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
