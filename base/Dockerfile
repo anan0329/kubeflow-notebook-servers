@@ -10,7 +10,7 @@ ENV SHELL /bin/bash
 
 # args - software versions
 ARG KUBECTL_ARCH="amd64"
-ARG KUBECTL_VERSION=v1.21.0
+ARG KUBECTL_VERSION=v1.27.3
 ARG S6_ARCH="amd64"
  # renovate: datasource=github-tags depName=just-containers/s6-overlay versioning=loose
 ARG S6_VERSION=v2.2.0.3
@@ -39,6 +39,14 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     vim \
     wget \
     zip \
+    tree \
+    jq \
+    htop \
+    texinfo \
+    man-db \
+    less \
+    libgit2-dev \
+    libxml2-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 

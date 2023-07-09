@@ -25,7 +25,6 @@ LittleFoxTeam.vscode-python-test-adapter
 quarto.quarto
 REditorSupport.r
 RDebugger.r-debugger
-Mikhail-Arkhipov.r
 humao.rest-client
 wayou.vscode-todo-highlight
 thisotherthing.vscode-todo-list
