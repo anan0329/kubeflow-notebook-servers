@@ -49,102 +49,7 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
     r-png=${R_PNG_VERSION} \
     radian
 
-RUN conda install -y -q \
-    r-assertthat \
-    r-blob \
-    r-callr \
-    r-caret \
-    r-cli \
-    r-clipr \
-    r-clock \
-    r-codetools \
-    r-cpp11 \
-    r-DALEX \
-    r-data.table \
-    r-dbi \
-    r-devtools \
-    r-e1071 \
-    r-fastmap \
-    r-forcats \
-    r-foreign \
-    r-formatr \
-    r-ggmap \
-    r-glmnet \
-    r-gt \
-    r-gtExtras \
-    r-ggvis \
-    r-glue
 
-RUN conda install -y -q \
-    r-haven \
-    r-highr \
-    r-httpgd \
-    r-htmlwidgets \
-    r-httr2 \
-    r-jsonlite \
-    r-knitr \
-    r-languageserver \
-    r-lightgbm \
-    r-lintr \
-    r-magrittr \
-    r-maps \
-    r-maptools \
-    r-matrixstats \
-    r-memoise \
-    r-mlr3verse \
-    r-multcomp \
-    r-odbc
-
-RUN conda install -y -q \
-    r-parallelly \
-    r-pins \
-    r-plotly \
-    r-plumber \
-    r-ps \
-    r-quantmod \
-    r-quarto \
-    r-r6 \ 
-    r-randomforest \
-    r-readxl \
-    r-rcpp \
-    r-rgl \
-    r-rlang \
-    r-rmarkdown \
-    r-rprojroot \
-    r-roxygen2 \
-    r-rpart \
-    r-rsqlite \
-    r-shiny \
-    r-shinyWidgets \
-    r-showtext \
-    r-sp
-
-RUN conda install -y -q \
-    r-tidymodels \
-    r-tidyquant \
-    r-tidyverse
-
-RUN conda install -y -q \
-    r-testthat \
-    r-torch \
-    r-vctrs
-
-RUN R -e "install.packages('vetiver',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('xgboost',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('patchwork',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('flexdashboard',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-
-# RUN conda install -y -q \
-#     r-vetiver \
-#     r-xgboost-gpu
-
-RUN conda install -y -q \
-    r-xml \
-    r-xml2 \
-    r-xts \
-    r-waldo \
-    r-vcd \
-    r-zoo
 
 USER root
 RUN conda update -y -q --all \
@@ -176,6 +81,7 @@ RUN curl -# -L -o /tmp/ms-python-release.vsix "https://github.com/microsoft/vsco
 ADD r-packages-install.sh /tmp/r-packages-install.sh
 ADD r-packages.txt /tmp/r-packages.txt
 RUN chmod 777 /tmp/r-packages-install.sh
+# RUN R -e "install.packages('testthat', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN bash /tmp/r-packages-install.sh
 RUN chown -R jovyan:root /home/jovyan/.local/share/code-server
 
