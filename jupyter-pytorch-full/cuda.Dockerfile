@@ -2,6 +2,8 @@
 ARG BASE_IMG=<jupyter-pytorch-cuda>
 FROM $BASE_IMG
 
+USER root
+
 # install - requirements.txt
 COPY --chown=jovyan:users requirements.txt /tmp/requirements.txt
 RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \

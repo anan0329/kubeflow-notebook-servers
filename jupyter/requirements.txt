@@ -1,3 +1,9 @@
 jupyterlab==3.4.3
-notebook==6.4.12
-ipykernel==6.15.0
+notebook==6.5.4
+ipykernel==6.23.2
+jupyter-dash==0.4.2
+jupyter_bokeh==3.0.7
+jupyterlab-git==0.41.0
+jupytext==1.14.6
+jupyterlab-system-monitor==0.8.0
+quarto==0.1.0

@@ -1,5 +1,5 @@
 TAG ?= $(shell git describe --tags --always --dirty)
-REGISTRY ?= kubeflownotebookswg
+REGISTRY ?= anan0329
 
 docker-build-jupyter-pytorch:
 	$(MAKE) docker-build-cpu -C ../jupyter-pytorch TAG=${TAG} 
