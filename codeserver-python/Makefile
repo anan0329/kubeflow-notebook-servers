@@ -1,5 +1,5 @@
-TAG ?= $(shell git describe --tags --always --dirty)
-REGISTRY ?= kubeflownotebookswg
+TAG ?= $(shell git describe --tags --always)
+REGISTRY ?= anan0329
 
 docker-build-codeserver:
 	$(MAKE) docker-build -C ../codeserver TAG=${TAG}
