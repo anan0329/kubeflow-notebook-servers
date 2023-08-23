@@ -46,9 +46,16 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     man-db \
     less \
     libgit2-dev \
+    libsecret-1-0 \
     libxml2-dev \
+    pandoc \
+    pandoc-citeproc \
+    gdebi-core \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
+RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 # install - s6 overlay
 RUN export GNUPGHOME=/tmp/ \
