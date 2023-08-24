@@ -2,7 +2,7 @@
 ARG BASE_IMG=<jupyter-pytorch-cuda>
 FROM $BASE_IMG
 
-USER 
+USER root
 
 RUN apt-get update \ 
  && apt-get install -y --no-install-recommends \
