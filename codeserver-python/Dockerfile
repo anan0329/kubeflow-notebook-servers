@@ -9,8 +9,8 @@ ARG CODESERVER_PYTHON_VERSION=2021.5.842923320
 ARG MINIFORGE_ARCH="x86_64"
  # renovate: datasource=github-tags depName=conda-forge/miniforge versioning=loose
 ARG MINIFORGE_VERSION=23.1.0-3
-ARG PIP_VERSION=23.0.1
-ARG PYTHON_VERSION=3.10.4
+ARG PIP_VERSION=23.1.2
+ARG PYTHON_VERSION=3.10.10
 ARG R_BASE_VERSION=4.3.0
 ARG R_RETICULATE_VERSION=1.30
 ARG R_PNG_VERSION=0.1_8
@@ -168,9 +168,9 @@ ENV TZ Etc/UTC
 RUN echo "TZ=${TZ}" >> ${R_HOME}/etc/Renviron.site
 
 # install - codeserver extensions
-RUN curl -# -L -o /tmp/ms-python-release.vsix "https://github.com/microsoft/vscode-python/releases/download/${CODESERVER_PYTHON_VERSION}/ms-python-release.vsix" \
- && code-server --install-extension /tmp/ms-python-release.vsix \
- && code-server --list-extensions --show-versions
+# RUN curl -# -L -o /tmp/ms-python-release.vsix "https://github.com/microsoft/vscode-python/releases/download/${CODESERVER_PYTHON_VERSION}/ms-python-release.vsix" \
+#  && code-server --install-extension /tmp/ms-python-release.vsix \
+#  && code-server --list-extensions --show-versions
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc

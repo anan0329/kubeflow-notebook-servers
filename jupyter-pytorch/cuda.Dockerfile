@@ -3,9 +3,10 @@ ARG BASE_IMG=<jupyter>
 FROM $BASE_IMG
 
 # nvidia configs
-ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
+# ENV NVIDIA_VISIBLE_DEVICES all
+# ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+# # ENV NVIDIA_REQUIRE_CUDA "cuda>=12.0"
+# ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
 # install - requirements.txt
 COPY --chown=jovyan:users cuda-requirements.txt /tmp/requirements.txt

@@ -1,5 +1,5 @@
 # Use the respective Makefile to build the image.
-FROM ubuntu:20.04
+FROM nvidia/cuda:12.2.0-devel-ubuntu20.04
 
 # common environemnt variables
 ENV NB_USER jovyan
@@ -51,6 +51,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     pandoc \
     pandoc-citeproc \
     gdebi-core \
+    make \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
