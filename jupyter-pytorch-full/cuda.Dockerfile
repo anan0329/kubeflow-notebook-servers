@@ -5,7 +5,7 @@ FROM $BASE_IMG
 USER root
 
 RUN git clone https://github.com/timdettmers/bitsandbytes.git
-WORKDIR /bitsandbytes
+WORKDIR ./bitsandbytes
 RUN CUDA_VERSION=117 make cuda11x
 RUN python setup.py install
 

@@ -1,3 +1,5 @@
+tidyverse
+tidymodels
 assertthat
 blob
 callr
@@ -62,9 +64,7 @@ shiny
 shinyWidgets
 showtext
 sp
-tidymodels
 tidyquant
-tidyverse
 testthat
 torch
 vctrs

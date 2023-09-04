@@ -10,9 +10,9 @@ ARG MINIFORGE_ARCH="x86_64"
  # renovate: datasource=github-tags depName=conda-forge/miniforge versioning=loose
 ARG MINIFORGE_VERSION=23.1.0-3
 ARG PIP_VERSION=23.1.2
-ARG PYTHON_VERSION=3.10.10
-ARG R_BASE_VERSION=4.3.0
-ARG R_RETICULATE_VERSION=1.30
+ARG PYTHON_VERSION=3.11.5
+ARG R_BASE_VERSION=4.3.1
+ARG R_RETICULATE_VERSION=1.31
 ARG R_PNG_VERSION=0.1_8
 
 # nvidia configs
@@ -49,102 +49,101 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
     r-png=${R_PNG_VERSION} \
     radian
 
-RUN conda install -y -q \
-    r-assertthat \
-    r-blob \
-    r-callr \
-    r-caret \
-    r-cli \
-    r-clipr \
-    r-clock \
-    r-codetools \
-    r-cpp11 \
-    r-DALEX \
-    r-data.table \
-    r-dbi \
-    r-devtools \
-    r-e1071 \
-    r-fastmap \
-    r-forcats \
-    r-foreign \
-    r-formatr \
-    r-ggmap \
-    r-glmnet \
-    r-gt \
-    r-gtExtras \
-    r-ggvis \
-    r-glue
-
-RUN conda install -y -q \
-    r-haven \
-    r-highr \
-    r-httpgd \
-    r-htmlwidgets \
-    r-httr2 \
-    r-jsonlite \
-    r-knitr \
-    r-languageserver \
-    r-lightgbm \
-    r-lintr \
-    r-magrittr \
-    r-maps \
-    r-maptools \
-    r-matrixstats \
-    r-memoise \
-    r-mlr3verse \
-    r-multcomp \
-    r-odbc
-
-RUN conda install -y -q \
-    r-parallelly \
-    r-pins \
-    r-plotly \
-    r-plumber \
-    r-ps \
-    r-quantmod \
-    r-quarto \
-    r-r6 \ 
-    r-randomforest \
-    r-readxl \
-    r-rcpp \
-    r-rgl \
-    r-rlang \
-    r-rmarkdown \
-    r-rprojroot \
-    r-roxygen2 \
-    r-rpart \
-    r-rsqlite \
-    r-shiny \
-    r-shinyWidgets \
-    r-showtext \
-    r-sp
-
-RUN conda install -y -q \
-    r-tidymodels \
-    r-tidyquant \
-    r-tidyverse
-
-RUN conda install -y -q \
-    r-testthat \
-    r-torch \
-    r-vctrs
-
-RUN R -e "install.packages('vetiver',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('xgboost',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('patchwork',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('flexdashboard',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+# RUN conda install -y -q \
+#     r-assertthat \
+#     r-blob \
+#     r-callr \
+#     r-caret \
+#     r-cli \
+#     r-clipr \
+#     r-clock \
+#     r-codetools \
+#     r-cpp11 \
+#     r-DALEX \
+#     r-data.table \
+#     r-dbi \
+#     r-devtools \
+#     r-e1071 \
+#     r-fastmap \
+#     r-forcats \
+#     r-foreign \
+#     r-formatr \
+#     r-ggmap \
+#     r-glmnet \
+#     r-gt \
+#     r-gtExtras \
+#     r-ggvis \
+#     r-glue
 
 # RUN conda install -y -q \
-#     r-vetiver \
+#     r-haven \
+#     r-highr \
+#     r-httpgd \
+#     r-htmlwidgets \
+#     r-httr2 \
+#     r-jsonlite \
+#     r-knitr \
+#     r-languageserver \
+#     r-lightgbm \
+#     r-lintr \
+#     r-magrittr \
+#     r-maps \
+#     r-maptools \
+#     r-matrixstats \
+#     r-memoise \
+#     r-mlr3verse \
+#     r-multcomp \
+#     r-odbc
+
+# RUN conda install -y -q \
+#     r-parallelly \
+#     r-pins \
+#     r-plotly \
+#     r-plumber \
+#     r-ps \
+#     r-quantmod \
+#     r-quarto \
+#     r-r6 \ 
+#     r-randomforest \
+#     r-readxl \
+#     r-rcpp \
+#     r-rgl \
+#     r-rlang \
+#     r-rmarkdown \
+#     r-rprojroot \
+#     r-roxygen2 \
+#     r-rpart \
+#     r-rsqlite \
+#     r-shiny \
+#     r-shinyWidgets \
+#     r-showtext \
+#     r-sp
+
+# RUN conda install -y -q \
+#     r-tidymodels \
+#     r-tidyquant \
+#     r-tidyverse
+
+# RUN conda install -y -q \
+#     r-testthat \
+#     r-torch \
+#     r-vctrs
+
+# RUN R -e "install.packages('vetiver',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+# RUN R -e "install.packages('xgboost',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+# RUN R -e "install.packages('patchwork',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+# RUN R -e "install.packages('flexdashboard',dependencies=TRUE, repos='http://cran.rstudio.com/')"
+
+# RUN conda install -y -q \
 #     r-xgboost-gpu
 
-RUN conda install -y -q \
-    r-xml \
-    r-xml2 \
-    r-xts \
-    r-waldo \
-    r-vcd \
-    r-zoo
+# RUN conda install -y -q \
+#     r-xml \
+#     r-xml2 \
+#     r-xts \
+#     r-waldo \
+#     r-vcd \
+#     r-zoo
 
 USER root
 RUN conda update -y -q --all \
@@ -154,7 +153,7 @@ RUN conda update -y -q --all \
 
 # install - requirements.txt
 COPY --chown=jovyan:users requirements.txt /tmp
-RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
+RUN python3 -m pip install -r /tmp/requirements.txt --no-cache-dir \
  && rm -f /tmp/requirements.txt \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
  && chown -R ${NB_USER}:users ${HOME}

@@ -1,9 +1,9 @@
 kfp==2.0.1
-kfp-server-api==2.0.0
-kserve==0.10.2
+kfp-server-api==2.0.1
+kserve==0.11.0
 
-jupyterlab==4.0.2
-notebook==6.5.4
+jupyterlab==4.0.5
+notebook==7.0.2
 ipykernel==6.24.0
 jupyter==1.0.0
 
@@ -14,3 +14,6 @@ torchmetrics==1.0.0
 torchtext==0.15.2
 torchvision==0.15.2
 torchserve==0.8.1
+torchrec==0.4.0
+torchdata==0.6.1
+torchelastic==0.2.2

@@ -1,1 +1,4 @@
+images_tar/*
 */*.yml
+*/.ipynb_checkpoints
+*/*.ipynb
