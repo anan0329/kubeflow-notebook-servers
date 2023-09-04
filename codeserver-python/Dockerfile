@@ -10,7 +10,7 @@ ARG MINIFORGE_ARCH="x86_64"
  # renovate: datasource=github-tags depName=conda-forge/miniforge versioning=loose
 ARG MINIFORGE_VERSION=23.1.0-3
 ARG PIP_VERSION=23.1.2
-ARG PYTHON_VERSION=3.11.5
+ARG PYTHON_VERSION=3.10.10
 ARG R_BASE_VERSION=4.3.1
 ARG R_RETICULATE_VERSION=1.31
 ARG R_PNG_VERSION=0.1_8
@@ -47,7 +47,8 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
     r-base=${R_BASE_VERSION} \
     r-reticulate=${R_RETICULATE_VERSION} \
     r-png=${R_PNG_VERSION} \
-    radian
+    radian \
+    r-languageserver
 
 # RUN conda install -y -q \
 #     r-assertthat \
@@ -170,6 +171,16 @@ RUN echo "TZ=${TZ}" >> ${R_HOME}/etc/Renviron.site
 # RUN curl -# -L -o /tmp/ms-python-release.vsix "https://github.com/microsoft/vscode-python/releases/download/${CODESERVER_PYTHON_VERSION}/ms-python-release.vsix" \
 #  && code-server --install-extension /tmp/ms-python-release.vsix \
 #  && code-server --list-extensions --show-versions
+
+WORKDIR /opt
+
+RUN pip install --upgrade Pillow==5.4.1 idna==2.8 requests==2.21.0 urllib3==1.24.1 pycairo==1.20.1 gftools==0.7.4 fontmake==2.4.0 fontbakery==0.8.0
+RUN apt-get update && \
+    apt-get install -y ttfautohint && \
+    apt-get install -y woff2 && \
+    apt-get install -y sfnt2woff-zopfli
+
+WORKDIR /
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
