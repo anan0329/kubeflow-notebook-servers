@@ -8,11 +8,11 @@ ipykernel==6.24.0
 jupyter==1.0.0
 
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torch==2.0.1
-torchaudio==2.0.2
-torchmetrics==1.0.0
+torch==2.0.1+cu117
+torchvision==0.15.2+cu117
+torchaudio==2.0.2+cu117
 torchtext==0.15.2
-torchvision==0.15.2
+torchmetrics==1.0.0
 torchserve==0.8.1
 torchrec==0.4.0
 torchdata==0.6.1

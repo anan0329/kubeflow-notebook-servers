@@ -10,7 +10,7 @@ ARG MINIFORGE_ARCH="x86_64"
  # renovate: datasource=github-tags depName=conda-forge/miniforge versioning=loose
 ARG MINIFORGE_VERSION=23.1.0-3
 ARG PIP_VERSION=23.1.2
-ARG PYTHON_VERSION=3.10.10
+ARG PYTHON_VERSION=3.11.5
 ARG R_BASE_VERSION=4.3.1
 ARG R_RETICULATE_VERSION=1.31
 ARG R_PNG_VERSION=0.1_8
@@ -174,7 +174,9 @@ RUN echo "TZ=${TZ}" >> ${R_HOME}/etc/Renviron.site
 
 WORKDIR /opt
 
-RUN pip install --upgrade Pillow==5.4.1 idna==2.8 requests==2.21.0 urllib3==1.24.1 pycairo==1.20.1 gftools==0.7.4 fontmake==2.4.0 fontbakery==0.8.0
+RUN apt-get update && \
+    apt-get install -y libcairo2 libcairo2-dev
+RUN pip install --upgrade Pillow==10.0.0 idna==3.4 requests==2.31.0 urllib3==2.0.4 pycairo==1.24.0 gftools==0.9.33 fontmake==3.7.1 fontbakery==0.8.13
 RUN apt-get update && \
     apt-get install -y ttfautohint && \
     apt-get install -y woff2 && \
