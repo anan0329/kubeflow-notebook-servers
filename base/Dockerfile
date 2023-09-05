@@ -1,5 +1,7 @@
 # Use the respective Makefile to build the image.
 FROM nvidia/cuda:12.2.0-devel-ubuntu20.04
+# FROM nvidia/cuda:11.6.2-devel-ubuntu20.04
+# FROM kaldiasr/kaldi:latest
 # FROM kaldiasr/kaldi:latest
 
 # common environemnt variables
