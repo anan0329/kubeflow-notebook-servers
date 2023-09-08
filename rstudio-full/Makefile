@@ -5,7 +5,7 @@ docker-build-rstudio:
 	$(MAKE) docker-build -C ../rstudio TAG=${TAG} 
 
 docker-build: docker-build-rstudio
-	docker build -t ${REGISTRY}/rstudio-tidyverse:${TAG} --build-arg BASE_IMG=${REGISTRY}/rstudio:${TAG} -f Dockerfile . 
+	docker build -t ${REGISTRY}/rstudio-full:${TAG} --build-arg BASE_IMG=${REGISTRY}/rstudio:${TAG} -f Dockerfile . 
 
 docker-push:
-	docker push ${REGISTRY}/rstudio-tidyverse:${TAG}
+	docker push ${REGISTRY}/rstudio-full:${TAG}

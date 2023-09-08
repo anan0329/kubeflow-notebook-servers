@@ -20,6 +20,7 @@ ARG R_PNG_VERSION=0.1_8
 # install - binary rstudio dependencies
 RUN apt-get -yq update \
  && apt-get -yq install --no-install-recommends \
+#  build-essential \
     dpkg-sig \
     libapparmor1 \
     libc6 \
@@ -28,9 +29,19 @@ RUN apt-get -yq update \
     libpq5 \
     psmisc \
     rrdtool \
-    sudo \
+    sudo \ 
+    gdebi-core \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+# RUN apt-get install --only-upgrade libstdc++6
+
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+RUN apt-get -yq update
+RUN apt-get -yq upgrade
+RUN apt-get -yq dist-upgrade
+
+RUN strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
 
 # setup environment for conda
 ENV CONDA_DIR /opt/conda
@@ -67,6 +78,7 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
     r-base=${R_BASE_VERSION} \
     r-reticulate=${R_RETICULATE_VERSION} \
     r-png=${R_PNG_VERSION} \
+   #  libgcc=5.2.0 \
  && conda update -y -q --all \
  && conda clean -a -f -y \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
@@ -84,11 +96,12 @@ USER root
 
 # install - rstudio-server
 # Affero General Public License may apply to RStudio: https://www.gnu.org/licenses/agpl-3.0.en.html
-RUN curl -sL "https://download2.rstudio.org/server/bionic/${RSTUDIO_ARCH}/rstudio-server-${RSTUDIO_VERSION//+/-}-${RSTUDIO_ARCH}.deb" -o /tmp/rstudio-server.deb \
+# RUN curl -sL "https://download2.rstudio.org/server/bionic/${RSTUDIO_ARCH}/rstudio-server-${RSTUDIO_VERSION//+/-}-${RSTUDIO_ARCH}.deb" -o /tmp/rstudio-server.deb \
+RUN curl -sL "https://download2.rstudio.org/server/focal/${RSTUDIO_ARCH}/rstudio-server-${RSTUDIO_VERSION//+/-}-${RSTUDIO_ARCH}.deb" -o /tmp/rstudio-server.deb \
     # add rstudio public code-signing key
  && gpg --keyserver keys.gnupg.net --keyserver pgp.surfnet.nl --recv-keys 3F32EE77E331692F \
     # validate the build signature
- && dpkg-sig --verify /tmp/rstudio-server.deb \
+#  && dpkg-sig --verify /tmp/rstudio-server.deb \
  && dpkg -i /tmp/rstudio-server.deb \
  && rm -f /tmp/rstudio-server.deb \
     # our Kaniko build excludes `/var/run/*` but RStudio needs those files,
@@ -108,6 +121,19 @@ RUN curl -sL "https://download2.rstudio.org/server/bionic/${RSTUDIO_ARCH}/rstudi
 COPY --chown=jovyan:users rsession.sh /opt
 RUN chmod +x /opt/rsession.sh
 
+WORKDIR /opt
+
+RUN apt-get update && \
+    apt-get install -y libcairo2 libcairo2-dev
+RUN pip install --upgrade Pillow==10.0.0 idna==3.4 requests==2.31.0 urllib3==2.0.4 pycairo==1.24.0 gftools==0.9.33 fontmake==3.7.1 fontbakery==0.8.13
+RUN apt-get update && \
+    apt-get install -y ttfautohint && \
+    apt-get install -y woff2 && \
+    apt-get install -y sfnt2woff-zopfli
+
+WORKDIR /
+
+
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
 
@@ -116,7 +142,8 @@ RUN mkdir -p /tmp_home \
  && cp -r ${HOME} /tmp_home \
  && chown -R ${NB_USER}:users /tmp_home
 
-USER ${NB_UID}
+# USER ${NB_UID}
+USER root
 
 EXPOSE 8888
 
