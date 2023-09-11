@@ -29,4 +29,9 @@ RUN chmod 777 /tmp/r-packages-install.sh
 RUN bash /tmp/r-packages-install.sh
 # RUN chown -R jovyan:root /home/jovyan/.local/share/code-server
 
+RUN R -e "torch::install_torch()"
+# RUN R -e "reticulate::install_python(version = '3.11')"
+# RUN R -e "keras::install_keras()"
+RUN R -e "install.packages('mlr3proba', repos = 'https://mlr-org.r-universe.dev')"
+
 USER ${NB_USER}
