@@ -29,9 +29,14 @@ RUN chmod 777 /tmp/r-packages-install.sh
 RUN bash /tmp/r-packages-install.sh
 # RUN chown -R jovyan:root /home/jovyan/.local/share/code-server
 
-RUN R -e "torch::install_torch()"
+# RUN R -e "torch::install_torch()"
 # RUN R -e "reticulate::install_python(version = '3.11')"
 # RUN R -e "keras::install_keras()"
 RUN R -e "install.packages('mlr3proba', repos = 'https://mlr-org.r-universe.dev')"
+RUN R -e "devtools::install_github('strboul/caseconverter')"
+RUN R -e "remotes::install_github('matt-dray/quartostamp')"
+RUN R -e "remotes::install_github('matt-dray/snorkel')"
+RUN R -e "remotes::install_github('gesistsa/rio')"
+RUN R -e "rio::install_formats()"
 
 USER ${NB_USER}

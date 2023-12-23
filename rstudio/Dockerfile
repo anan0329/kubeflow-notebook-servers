@@ -12,9 +12,9 @@ ARG PIP_VERSION=23.1.2
 ARG PYTHON_VERSION=3.11.5
 ARG RSTUDIO_ARCH="amd64"
 # renovate: datasource=github-tags depName=rstudio/rstudio versioning=semver
-ARG RSTUDIO_VERSION=2023.06.2+561
-ARG R_BASE_VERSION=4.3.1
-ARG R_RETICULATE_VERSION=1.31
+ARG RSTUDIO_VERSION=2023.12.0+369
+ARG R_BASE_VERSION=4.3.2
+ARG R_RETICULATE_VERSION=1.34
 ARG R_PNG_VERSION=0.1_8
 
 # install - binary rstudio dependencies
@@ -121,17 +121,8 @@ RUN curl -sL "https://download2.rstudio.org/server/focal/${RSTUDIO_ARCH}/rstudio
 COPY --chown=jovyan:users rsession.sh /opt
 RUN chmod +x /opt/rsession.sh
 
-WORKDIR /opt
-
-RUN apt-get update && \
-    apt-get install -y libcairo2 libcairo2-dev
-RUN pip install --upgrade Pillow==10.0.0 idna==3.4 requests==2.31.0 urllib3==2.0.4 pycairo==1.24.0 gftools==0.9.33 fontmake==3.7.1 fontbakery==0.8.13
-RUN apt-get update && \
-    apt-get install -y ttfautohint && \
-    apt-get install -y woff2 && \
-    apt-get install -y sfnt2woff-zopfli
-
-WORKDIR /
+RUN R -e "install.packages('rstudioapi')"
+RUN git clone https://github.com/lusignan/RStudio-Material-Theme.git
 
 
 # s6 - copy scripts
