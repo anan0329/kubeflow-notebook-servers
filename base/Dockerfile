@@ -21,7 +21,7 @@ ARG S6_VERSION=v2.2.0.3
 # set shell to bash
 SHELL ["/bin/bash", "-c"]
 
-# install - usefull linux packages
+# install - useful linux packages
 RUN export DEBIAN_FRONTEND=noninteractive \
  && apt-get -yq update \
  && apt-get -yq install --no-install-recommends \
@@ -55,11 +55,42 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     pandoc-citeproc \
     gdebi-core \
     make \
+    bat \
+   #  duf \
+   #  bpytop \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+# RUN curl -fsSL https://azlux.fr/repo.gpg.key | gpg --dearmor -o /usr/share/keyrings/azlux-archive-keyring.gpg
+# RUN echo \
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian \
+#   $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azlux.list >/dev/null
+# RUN apt-get -yq update && apt-get -yq install docker-ctop
+
+# install diff-so-fancy
+RUN mkdir -p ~/bin
+WORKDIR ~/bin
+RUN git clone https://github.com/so-fancy/diff-so-fancy diffsofancy
+RUN chmod +x diffsofancy/diff-so-fancy
+RUN ln -s ~/bin/diffsofancy/diff-so-fancy ~/bin/diff-so-fancy
+
+# install quarto
 RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
+
+# install Fira Code
+# WORKDIR /opt
+
+# RUN apt-get update && \
+#     apt-get install -y libcairo2 libcairo2-dev
+# RUN apt-get update && apt-get -yq install python3-pip
+# RUN pip install --upgrade Pillow==10.0.0 idna==3.4 requests==2.31.0 urllib3==2.0.4 pycairo==1.24.0 gftools==0.9.33 fontmake==3.7.1 fontbakery==0.8.13
+# RUN apt-get update && \
+#     apt-get install -y ttfautohint && \
+#     apt-get install -y woff2 && \
+#     apt-get install -y sfnt2woff-zopfli
+
+RUN apt-get update && apt install -y fontconfig fonts-firacode
 
 # install - s6 overlay
 RUN export GNUPGHOME=/tmp/ \
