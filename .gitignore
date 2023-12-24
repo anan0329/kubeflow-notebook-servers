@@ -4,3 +4,4 @@ images_tar/*
 */*.ipynb
 */Llama*/*
 */__pycache__/*
+docker_images/*
