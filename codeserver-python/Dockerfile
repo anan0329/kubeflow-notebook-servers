@@ -5,14 +5,14 @@ FROM $BASE_IMG
 USER root
 
 # args - software versions
-ARG CODESERVER_PYTHON_VERSION=2021.5.842923320
+# ARG CODESERVER_PYTHON_VERSION=2021.5.842923320
 ARG MINIFORGE_ARCH="x86_64"
  # renovate: datasource=github-tags depName=conda-forge/miniforge versioning=loose
-ARG MINIFORGE_VERSION=23.1.0-3
-ARG PIP_VERSION=23.1.2
-ARG PYTHON_VERSION=3.11.5
-ARG R_BASE_VERSION=4.3.1
-ARG R_RETICULATE_VERSION=1.31
+ARG MINIFORGE_VERSION=23.3.1-1
+ARG PIP_VERSION=23.3.2
+ARG PYTHON_VERSION=3.11.7
+ARG R_BASE_VERSION=4.3.2
+ARG R_RETICULATE_VERSION=1.34
 ARG R_PNG_VERSION=0.1_8
 
 # nvidia configs
@@ -50,101 +50,7 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
     radian \
     r-languageserver
 
-# RUN conda install -y -q \
-#     r-assertthat \
-#     r-blob \
-#     r-callr \
-#     r-caret \
-#     r-cli \
-#     r-clipr \
-#     r-clock \
-#     r-codetools \
-#     r-cpp11 \
-#     r-DALEX \
-#     r-data.table \
-#     r-dbi \
-#     r-devtools \
-#     r-e1071 \
-#     r-fastmap \
-#     r-forcats \
-#     r-foreign \
-#     r-formatr \
-#     r-ggmap \
-#     r-glmnet \
-#     r-gt \
-#     r-gtExtras \
-#     r-ggvis \
-#     r-glue
-
-# RUN conda install -y -q \
-#     r-haven \
-#     r-highr \
-#     r-httpgd \
-#     r-htmlwidgets \
-#     r-httr2 \
-#     r-jsonlite \
-#     r-knitr \
-#     r-languageserver \
-#     r-lightgbm \
-#     r-lintr \
-#     r-magrittr \
-#     r-maps \
-#     r-maptools \
-#     r-matrixstats \
-#     r-memoise \
-#     r-mlr3verse \
-#     r-multcomp \
-#     r-odbc
-
-# RUN conda install -y -q \
-#     r-parallelly \
-#     r-pins \
-#     r-plotly \
-#     r-plumber \
-#     r-ps \
-#     r-quantmod \
-#     r-quarto \
-#     r-r6 \ 
-#     r-randomforest \
-#     r-readxl \
-#     r-rcpp \
-#     r-rgl \
-#     r-rlang \
-#     r-rmarkdown \
-#     r-rprojroot \
-#     r-roxygen2 \
-#     r-rpart \
-#     r-rsqlite \
-#     r-shiny \
-#     r-shinyWidgets \
-#     r-showtext \
-#     r-sp
-
-# RUN conda install -y -q \
-#     r-tidymodels \
-#     r-tidyquant \
-#     r-tidyverse
-
-# RUN conda install -y -q \
-#     r-testthat \
-#     r-torch \
-#     r-vctrs
-
-# RUN R -e "install.packages('vetiver',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('xgboost',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('patchwork',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('flexdashboard',dependencies=TRUE, repos='http://cran.rstudio.com/')"
-
-# RUN conda install -y -q \
-#     r-xgboost-gpu
-
-# RUN conda install -y -q \
-#     r-xml \
-#     r-xml2 \
-#     r-xts \
-#     r-waldo \
-#     r-vcd \
-#     r-zoo
+RUN conda install -c pytorch faiss-gpu
 
 USER root
 RUN conda update -y -q --all \
@@ -172,17 +78,6 @@ RUN echo "TZ=${TZ}" >> ${R_HOME}/etc/Renviron.site
 #  && code-server --install-extension /tmp/ms-python-release.vsix \
 #  && code-server --list-extensions --show-versions
 
-WORKDIR /opt
-
-RUN apt-get update && \
-    apt-get install -y libcairo2 libcairo2-dev
-RUN pip install --upgrade Pillow==10.0.0 idna==3.4 requests==2.31.0 urllib3==2.0.4 pycairo==1.24.0 gftools==0.9.33 fontmake==3.7.1 fontbakery==0.8.13
-RUN apt-get update && \
-    apt-get install -y ttfautohint && \
-    apt-get install -y woff2 && \
-    apt-get install -y sfnt2woff-zopfli
-
-WORKDIR /
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc

@@ -2,6 +2,10 @@
 ARG BASE_IMG=<codeserver-python>
 FROM $BASE_IMG
 
+ARG R_TIDYVERSE_VERSION="2.0.0"
+ARG R_TIDYMODELS_VERSION="1.1.1"
+ARG R_MLR3VERSE_VERSION="0.2.8"
+
 USER root
 
 # # args - software versions
@@ -76,11 +80,26 @@ RUN python3 -m pip install -r /tmp/requirements.txt --no-cache-dir \
 #  && code-server --list-extensions --show-versions
 
 # install r packages
+RUN conda install -y -q \
+    r-tidyverse=${R_TIDYVERSE_VERSION} \
+    r-tidymodels=${R_TIDYMODELS_VERSION} \
+    r-mlr3verse=${R_MLR3VERSE_VERSION} \
+    radian
 ADD r-packages-install.sh /tmp/r-packages-install.sh
 ADD r-packages.txt /tmp/r-packages.txt
 RUN chmod 777 /tmp/r-packages-install.sh
-# RUN R -e "install.packages('testthat', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('mlr3proba', repos = 'https://mlr-org.r-universe.dev')"
+RUN R -e "install.packages('devtools', repos='http://cran.rstudio.com/')"
+RUN R -e "devtools::install_github('strboul/caseconverter')"
+RUN R -e "remotes::install_github('matt-dray/quartostamp')"
+RUN R -e "remotes::install_github('matt-dray/snorkel')"
+RUN R -e "remotes::install_github('gesistsa/rio')"
+RUN R -e "rio::install_formats(repos='http://cran.rstudio.com/')"
 RUN bash /tmp/r-packages-install.sh
+
+# RUN mkdir -p ${HOME}/Llama-2-7b-chat-hf
+# COPY --chown=jovyan:users Llama-2-7b-chat-hf/* ${HOME}/Llama-2-7b-chat-hf
+
 RUN chown -R jovyan:root /home/jovyan/.local/share/code-server
 
 # # s6 - copy scripts
