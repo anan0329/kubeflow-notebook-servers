@@ -69,7 +69,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 
 # install diff-so-fancy
 RUN mkdir -p ~/bin
-WORKDIR ~/bin
+WORKDIR ${HOME}/bin
 RUN git clone https://github.com/so-fancy/diff-so-fancy diffsofancy
 RUN chmod +x diffsofancy/diff-so-fancy
 RUN ln -s ~/bin/diffsofancy/diff-so-fancy ~/bin/diff-so-fancy
